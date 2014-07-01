@@ -1,0 +1,30 @@
+ENTRY(start)
+SECTIONS
+{
+  /* Code goes here (start at 1 MB)  (page-aligned) */
+  .text 0x100000 :
+  {
+    code = .; _code = .; __code = .;
+    *(.text)
+    . = ALIGN(4096);
+  }
+
+  /* All initialized static data goes here (page-aligned) */
+  .data :
+  {
+     data = .; _data = .; __data = .;
+     *(.data)
+     *(.rodata) /* All constants go here, in .data seciton */
+     . = ALIGN(4096);
+  }
+
+  /* All unintialized static data goes here (page-aligned)*/
+  .bss :
+  {
+    bss = .; _bss = .; __bss = .;
+    *(.bss)
+    . = ALIGN(4096);
+  }
+
+  end = .; _end = .; __end = .;
+}
