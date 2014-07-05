@@ -3,33 +3,26 @@ COBJECTS=$(patsubst %.c, %.o, $(CSOURCES))
 SSOURCES=$(shell find -name *.s)
 SOBJECTS=$(patsubst %.s, %.o, $(SSOURCES))
 
-CC=gcc
+CC=i686-elf-gcc
 LD=ld
-CFLAGS=-nostdlib -fno-builtin -m32
+CFLAGS=-m32 -ffreestanding -std=c99
 LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
 all: $(COBJECTS) $(SOBJECTS) link update
 
-bochs:
-        bash scripts/run_bochs.sh
-
-update:
-        @echo Updating floppy image
-        @bash scripts/update_image.sh
-
 clean:
-        @echo Removing object files
-        @-rm $(COBJECTS) $(SOBJECTS) kernel
+	@echo Removing object files
+	@-rm $(COBJECTS) $(SOBJECTS) kernel
 
 link:
-        @echo Linking
-        @$(LD) $(LDFLAGS) -o kernel $(SOBJECTS) $(COBJECTS)
+	@echo Linking
+	@$(LD) $(LDFLAGS) -o kernel $(SOBJECTS) $(COBJECTS)
 
 .s.o:
-        @echo Assembling $<
-        @nasm $(ASFLAGS) $<
+	@echo Assembling $<
+	@nasm $(ASFLAGS) $<
 
 .c.o:
-        @echo Compiling $<
-        @$(CC) $(CFLAGS) -o $@ -c $<
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
