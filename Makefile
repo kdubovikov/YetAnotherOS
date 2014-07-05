@@ -5,7 +5,7 @@ SOBJECTS=$(patsubst %.s, %.o, $(SSOURCES))
 
 CC=i686-elf-gcc
 LD=ld
-CFLAGS=-m32 -ffreestanding -std=c99
+CFLAGS=-m32 -ffreestanding -std=c99 -masm=intel
 LDFLAGS=-melf_i386 -Tlink.ld
 ASFLAGS=-felf
 
