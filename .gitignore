@@ -1,4 +1,4 @@
 # Ignore temporary files
 *~
 
-kernel
+kernel.bin

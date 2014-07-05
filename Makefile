@@ -2,6 +2,7 @@ CSOURCES=$(shell find -name *.c)
 COBJECTS=$(patsubst %.c, %.o, $(CSOURCES))
 SSOURCES=$(shell find -name *.s)
 SOBJECTS=$(patsubst %.s, %.o, $(SSOURCES))
+KERNELNAME=kernel.bin
 
 CC=i686-elf-gcc
 LD=ld
@@ -13,11 +14,11 @@ all: $(COBJECTS) $(SOBJECTS) link update
 
 clean:
 	@echo Removing object files
-	@-rm $(COBJECTS) $(SOBJECTS) kernel
+	@-rm $(COBJECTS) $(SOBJECTS) $(KERNELNAME)
 
 link:
 	@echo Linking
-	@$(LD) $(LDFLAGS) -o kernel $(SOBJECTS) $(COBJECTS)
+	@$(LD) $(LDFLAGS) -o $(KERNELNAME) $(SOBJECTS) $(COBJECTS)
 
 .s.o:
 	@echo Assembling $<
